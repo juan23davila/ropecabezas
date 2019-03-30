@@ -37,7 +37,6 @@ li::before {
 
 .col-60 {
   background: #E84A5F;
-
 }
 
 #flecha{
@@ -53,7 +52,25 @@ li::before {
   animation: fadein 2s;
 }
 
+#juego{
+  width: 600px;
+  height: 600px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 @keyframes fadein {
   from { opacity: 0; }
   to   { opacity: 1; }
+}
+
+.pieza{
+  width: 200px;
+  height: 200px;
+  border: #000 solid 0.6px;
+  box-sizing: border-box;
+}
+
+img{
+  width: 100%;
 }
