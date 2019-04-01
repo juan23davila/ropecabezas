@@ -86,3 +86,75 @@ li::before {
 img{
   width: 100%;
 }
+
+#footer{
+  background-color: black;
+  color: white;
+  padding: 3px 0px;
+  display: flex;
+  justify-content: center;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%; /* Could be more or less, depending on screen size */
+  text-align: center;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#tableToChoose{
+  width: 40%;
+  border: #000 solid 1px;
+  margin: auto;
+}
+
+#tableToChoose:hover{
+  border: 2px solid #E84A5F;
+  cursor: pointer;
+}
+
+.opcs{
+  background-color: lightgray;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  border-radius: .25rem;
+  cursor: pointer;
+  margin-bottom: 2%;
+}
+
+.opcs:hover{
+  background-color: rgb(89, 124, 106);
+  border: 1px solid black;
+}

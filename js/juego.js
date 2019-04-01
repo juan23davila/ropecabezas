@@ -19,6 +19,20 @@ Esta posición comienza siendo la [2, 2]*/
 var filaVacia = 2;
 var columnaVacia = 2;
 
+/* Variables para el manejo de la alerta */
+// Get the modal
+var modal = document.getElementById('myModal');
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+//Variables adicionales agregadas por JDAVILA
+let tableroEnJuego = 1;
+
 /* Esta función deberá recorrer el arreglo de instrucciones pasado por parámetro. 
 Cada elemento de este arreglo deberá ser mostrado en la lista con id 'lista-instrucciones'. 
 Para eso deberás usar la función ya implementada mostrarInstruccionEnLista().
@@ -27,6 +41,18 @@ function mostrarInstrucciones(instrucciones) {
     for(let i = 0; i < instrucciones.length; i++){
       mostrarInstruccionEnLista(instrucciones[i], "lista-instrucciones");
     }
+}
+
+/**
+ * Muestra el contenido del footer
+ */
+function mostrarFooter(){
+  //Se obtiene año actual
+  let fecha = new Date();
+  let anio = fecha.getFullYear();
+  
+  let footer = document.getElementById("footer");
+  footer.textContent = "Copyright © "+anio+" @juan23davila";
 }
 
 /* COMPLETAR: Crear función que agregue la última dirección al arreglo de movimientos
@@ -56,7 +82,22 @@ function chequearSiGano() {
 // Implementar alguna forma de mostrar un cartel que avise que ganaste el juego
 function mostrarCartelGanador() {
     if(chequearSiGano){
-      alert("Juego completado, ha ganado.")
+      //alert("Juego completado, ha ganado.")
+      modal.style.display = "block";
+
+      //let tableToPlay = document.getElementById("movemets");
+
+      let tableToPlay = document.getElementById("tableToChoose");
+      let ImgToCharge = ""
+      if(tableroEnJuego === 1){
+        //Se carga tablero Pikachu
+        ImgToCharge = "<img src=\"images/final2.jpg\" alt=\"tablero Picachu\"></img>";
+        tableToPlay.innerHTML = ImgToCharge;
+      }else{
+        //Se carga tablero robot
+        ImgToCharge = "<img src=\"images/final.png\" alt=\"tablero Robot\"></img>";
+        tableToPlay.innerHTML = ImgToCharge;
+      }
     }
 }
 
@@ -114,13 +155,13 @@ function moverEnDireccion(direccion) {
   // Mueve pieza hacia la derecha, reemplazandola con la blanca
   else if (direccion === codigosDireccion.DERECHA) {
     nuevaFilaPiezaVacia = filaVacia;
-    nuevaColumnaPiezaVacia = columnaVacia + 1;
+    nuevaColumnaPiezaVacia = columnaVacia - 1;
   }
     
   // Mueve pieza hacia la izquierda, reemplazandola con la blanca
   else if (direccion === codigosDireccion.IZQUIERDA) {
     nuevaFilaPiezaVacia = filaVacia;
-    nuevaColumnaPiezaVacia = columnaVacia - 1;
+    nuevaColumnaPiezaVacia = columnaVacia + 1;
   }
 
   /* A continuación se chequea si la nueva posición es válida, si lo es, se intercambia. 
@@ -191,20 +232,25 @@ function intercambiarPosicionesDOM(idPieza1, idPieza2) {
 en la pantalla, representado con una flecha. */
 function actualizarUltimoMovimiento(direccion) {
   ultimoMov = document.getElementById('flecha');
-  switch (direccion) {
-    case codigosDireccion.ARRIBA:
-      ultimoMov.textContent = '↑';
-      break;
-    case codigosDireccion.ABAJO:
-      ultimoMov.textContent = '↓';
-      break;
-    case codigosDireccion.DERECHA:
-      ultimoMov.textContent = '→';
-      break;
-    case codigosDireccion.IZQUIERDA:
-      ultimoMov.textContent = '←';
-      break;
+  let allMoveme = "";
+  for(let i = (movimientos.length - 4); i < movimientos.length; i++){
+    switch (movimientos[i]) {
+      case codigosDireccion.ARRIBA:
+        allMoveme += '↑ ';
+        break;
+      case codigosDireccion.ABAJO:
+        allMoveme += '↓ ';
+        break;
+      case codigosDireccion.DERECHA:
+        allMoveme += '→ ';
+        break;
+      case codigosDireccion.IZQUIERDA:
+        allMoveme += '← ';
+        break;
+    }
   }
+
+  ultimoMov.textContent = allMoveme;
 }
 
 /* Esta función permite agregar una instrucción a la lista
@@ -235,7 +281,7 @@ function mezclarPiezas(veces) {
 
   setTimeout(function() {
       mezclarPiezas(veces - 1);
-    }, 100);
+    }, 50);
 }
 
 /* capturarTeclas: Esta función captura las teclas presionadas por el usuario. Javascript
@@ -268,10 +314,72 @@ y ejecutando la función para que se capturen las teclas que
 presiona el usuario */
 function iniciar() {
     mostrarInstrucciones(instrucciones);
-    mezclarPiezas(50);
+    mostrarFooter();
+    mezclarPiezas(120);
     capturarTeclas();
 }
 
+/* Se rinicia el rompecabezas mezclando las piezas 60 veces 
+y ejecutando la función para que se capturen las teclas que 
+presiona el usuario */
+function reiniciar() {
+  mezclarPiezas(120);
+  capturarTeclas();
+  modal.style.display = "none";
+}
+
+/**
+ * Funcion para ver el tablero ganador
+ */
+function verTablero(){
+  modal.style.display = "none";
+}
+
+/**
+ * Modifica el tablero a jugar
+ */
+function cambiarTablero(){
+  if(tableroEnJuego === 1)
+  {
+    cargarPikachu();
+    tableroEnJuego = 2;
+  }else{
+    cargarRobot();
+    tableroEnJuego = 1;
+  }
+}
+
+/**
+ * Se carga información de pikachu
+ */
+function cargarPikachu(){
+  document.getElementById("pieza1").innerHTML = "<img src=\"images/1.jpg\" alt=\"imagen 1\">";
+  document.getElementById("pieza2").innerHTML = "<img src=\"images/2.jpg\" alt=\"imagen 2\">";
+  document.getElementById("pieza3").innerHTML = "<img src=\"images/3.jpg\" alt=\"imagen 3\">";
+  document.getElementById("pieza4").innerHTML = "<img src=\"images/4.jpg\" alt=\"imagen 4\">";
+  document.getElementById("pieza5").innerHTML = "<img src=\"images/5.jpg\" alt=\"imagen 5\">";
+  document.getElementById("pieza6").innerHTML = "<img src=\"images/6.jpg\" alt=\"imagen 6\">";
+  document.getElementById("pieza7").innerHTML = "<img src=\"images/7.jpg\" alt=\"imagen 7\">";
+  document.getElementById("pieza8").innerHTML = "<img src=\"images/8.jpg\" alt=\"imagen 8\">";
+  document.getElementById("obje").innerHTML = "<img src=\"images/final2.jpg\" alt=\"Objetivo\">";
+  reiniciar();
+}
+
+/**
+ * Se carga información de robot
+ */
+function cargarRobot(){
+  document.getElementById("pieza1").innerHTML = "<img src=\"images/10.jpg\" alt=\"imagen 1\">";
+  document.getElementById("pieza2").innerHTML = "<img src=\"images/20.jpg\" alt=\"imagen 2\">";
+  document.getElementById("pieza3").innerHTML = "<img src=\"images/30.jpg\" alt=\"imagen 3\">";
+  document.getElementById("pieza4").innerHTML = "<img src=\"images/40.jpg\" alt=\"imagen 4\">";
+  document.getElementById("pieza5").innerHTML = "<img src=\"images/50.jpg\" alt=\"imagen 5\">";
+  document.getElementById("pieza6").innerHTML = "<img src=\"images/60.jpg\" alt=\"imagen 6\">";
+  document.getElementById("pieza7").innerHTML = "<img src=\"images/70.jpg\" alt=\"imagen 7\">";
+  document.getElementById("pieza8").innerHTML = "<img src=\"images/80.jpg\" alt=\"imagen 8\">";
+  document.getElementById("obje").innerHTML = "<img src=\"images/final.png\" alt=\"Objetivo\">";
+  reiniciar();
+}
 
 // Ejecutamos la función iniciar
 iniciar();

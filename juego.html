@@ -18,12 +18,12 @@
       </div>
       <div id="objetivo">
         <h2>Objetivo:</h2>
-        <div class="texto-centrado">
+        <div class="texto-centrado" id="obje">
           <img src="images/final.png" alt="objetivo">
         </div>
       </div>
       <div id="ultimo-mov">
-        <h2>Último movimiento:</h2>
+        <h2>Últimos 4 movimientos:</h2>
         <div id="flecha" class="texto-centrado"></div>
       </div>
       
@@ -58,8 +58,24 @@
         </div>
       </div>
     </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h1>Felicidades!, Has ganado</h1>
+        <p>¿Qué deseas hacer?</p>
+        <button type="button" class="opcs" onclick="reiniciar()">Reiniciar</button>
+        <button type="button" class="opcs" onclick="verTablero()">Ver tablero</button>
+        <h2>Juagar otro tablero</h2>
+        <div id="tableToChoose" onclick="cambiarTablero()"></div>
+      </div>
+
+    </div>
+
     <div id="footer">
-      footer
     </div>
     <script src="js/juego.js"></script>
   </body>
